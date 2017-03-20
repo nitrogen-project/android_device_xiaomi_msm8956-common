@@ -12,6 +12,11 @@ allow init-power-sh sysfs_performance:file w_file_perms;
 allow init-power-sh sysfs_thermal:dir search;
 allow init-power-sh sysfs_thermal:file w_file_perms;
 allow init-power-sh sysfs_power_management:file w_file_perms;
+allow init-power-sh sysfs_lowmemorykiller:file { read write open getattr setattr };
+allow init-power-sh system_file:file execute_no_trans;
+allow init-power-sh proc:file { open write read getattr setattr };
+allow init-power-sh sysfs:file { open write read getattr setattr };
+allow init-power-sh sysfs_rqstats:dir { read open search };
 
 # interactive files in /sys receive the default sysfs context when created
 # after the restorecon of /sys/. Allow init-power-sh to restorecon sysfs files
