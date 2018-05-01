@@ -285,6 +285,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.qcom.rc \
     init.target.rc \
+    init.target.performance.rc \
     init.qcom.usb.rc \
     ueventd.qcom.rc
 
