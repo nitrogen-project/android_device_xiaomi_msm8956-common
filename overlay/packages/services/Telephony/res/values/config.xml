@@ -27,6 +27,12 @@
     <!-- Flag indicating if the phone is a world phone -->
     <bool name="world_phone">true</bool>
 
+    <!-- Show enabled lte option for lte device -->
+    <bool name="config_enabled_lte" translatable="false">true</bool>
+
+    <!-- Show enabled tdscdma option for device -->
+    <bool name="config_support_tdscdma" translatable="false">true</bool>
+
     <!-- Flag indicating if dtmf tone type is enabled -->
     <bool name="dtmf_type_enabled">true</bool>
 
