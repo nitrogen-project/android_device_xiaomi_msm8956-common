@@ -45,22 +45,24 @@ TARGET_BOOTLOADER_BOARD_NAME := msm8952
 TARGET_NO_BOOTLOADER := true
 
 # Kernel
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 ramoops_memreserve=4M
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 ramoops_memreserve=4M androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
-BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_RAMDISK_OFFSET := 0x01000000
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8956
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-gnu/bin
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+TARGET_KERNEL_SOURCE := kernel/xiaomi/kenzo
+TARGET_KERNEL_CONFIG := kenzo_defconfig
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
 # Audio
+TARGET_QCOM_AUDIO_VARIANT := caf-msm8952
+TARGET_QCOM_MEDIA_VARIANT := caf-msm8952
 AUDIO_FEATURE_ENABLED_AAC_ADTS_OFFLOAD := true
 AUDIO_FEATURE_ENABLED_ACDB_LICENSE := true
 AUDIO_FEATURE_ENABLED_ALAC_OFFLOAD := true
@@ -89,6 +91,7 @@ BOARD_USES_ALSA_AUDIO := true
 USE_CUSTOM_AUDIO_POLICY := 1
 
 # Bluetooth
+TARGET_QCOM_BLUETOOTH_VARIANT := caf-msm8952
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 BLUETOOTH_HCI_USE_MCT := true
@@ -122,6 +125,7 @@ endif
 WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 # Display
+TARGET_QCOM_DISPLAY_VARIANT := caf-msm8952
 BOARD_USES_ADRENO := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
@@ -192,16 +196,11 @@ TARGET_SYSTEM_PROP += $(VENDOR_PATH)/system.prop
 
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
-TARGET_USE_SDCLANG := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/rootdir/etc/fstab.qcom
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
-
-# RIL
-PROTOBUF_SUPPORTED := true
-TARGET_RIL_VARIANT := caf
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
