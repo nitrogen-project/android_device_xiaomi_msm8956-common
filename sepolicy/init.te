@@ -1,1 +1,2 @@
 allow init debugfs:file write;
+allow init hwservicemanager:binder { call transfer };
